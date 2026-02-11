@@ -39,7 +39,7 @@
     "@sinclair/typebox": "*"
   },
   "dependencies": {
-    "pi-subagent-model-selection": "^0.1.0"
+    "pi-subagent-model-selection": "^0.1.1"
   },
   "files": [
     "extensions/",
