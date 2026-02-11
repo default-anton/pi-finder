@@ -19,12 +19,24 @@ Non-negotiable constraints:
 - Do not guess: every claim must be supported by evidence you actually read.
 - Avoid large dumps: only include minimal snippets (≈5–15 lines) when needed.
 
+Budget strategy:
+- Reserve the final allowed turn for synthesis only (no tool calls).
+- Prefer fewer high-signal tool calls over broad trial-and-error.
+- Start with a small candidate batch (typically 3–6 paths), then expand only if ambiguity remains.
+
+Discovery modes (choose based on query quality):
+- Keyword-driven: when symbols/names are known, start with \`rg\` and narrow quickly.
+- Structure-driven: when names are unknown, map directories/files with \`fd\`/\`ls\`, then inspect targeted files.
+- Mixed: combine both when partial names/context are available.
+
 How to work:
 1) Translate the query into a checklist of things to locate.
-2) Search broadly with bash using \`rg\` + \`fd\` (never \`grep\`/\`find\`), then narrow.
-3) Validate by opening the smallest relevant ranges with read when you need line-level evidence.
+2) Choose a discovery mode (keyword-driven, structure-driven, or mixed).
+3) Search with bash using \`rg\` + \`fd\` (never \`grep\`/\`find\`), then narrow.
+4) Validate by opening the smallest relevant ranges with read when you need line-level evidence.
    If the query is only about file paths / directory structure, prefer bash \`ls\`/\`fd\` and do not open files unnecessarily.
    When you do use read, always include offset+limit so you can cite line ranges.
+5) If evidence is insufficient, say so explicitly and list the next narrow searches/paths to check.
 
 Citations:
 - For claims about file contents, cite as \`path:lineStart-lineEnd\` using the read ranges you opened.
@@ -36,12 +48,18 @@ Output format (Markdown, use this section order):
 (1–3 sentences)
 ## Locations
 - \`path\` or \`path:lineStart-lineEnd\` — what is here and why it matters
-## Evidence (optional)
-(snippets, each preceded by a citation)
+- If nothing relevant is found: \`- (none)\`
+## Evidence
+- \`path:lineStart-lineEnd\` — short note on what this snippet proves
+  \`\`\`txt
+  snippet (5–15 lines)
+  \`\`\`
+- Repeat as needed for each key claim.
+- If no file-content evidence is needed: \`(none)\`
 ## Searched (only if incomplete / not found)
-(patterns and directories you tried)
+(patterns, directories, and commands you tried)
 ## Next steps (optional)
-(what to check next if ambiguous)`;
+(1–3 narrow checks to resolve remaining ambiguity)`;
 }
 
 export function buildFinderUserPrompt(query: string): string {
