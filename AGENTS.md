@@ -20,3 +20,7 @@ When changing model-selection behavior:
 1. Update upstream package tests/docs in `pi-subagent-model-selection` first.
 2. Update README section `Model selection policy`.
 3. Keep fallback behavior explicit and deterministic.
+
+## Release process
+
+For commit/push/tag/GitHub release/npm publish workflow, follow `docs/release-playbook.md`.
