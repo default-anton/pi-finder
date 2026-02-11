@@ -1,0 +1,49 @@
+{
+  "name": "pi-finder",
+  "version": "1.0.0",
+  "description": "Read-only codebase scout subagent package for pi coding agent",
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "finder",
+    "subagent",
+    "code-search"
+  ],
+  "license": "Apache-2.0",
+  "author": "Anton Kuzmenko",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/default-anton/pi-finder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/default-anton/pi-finder/issues"
+  },
+  "homepage": "https://github.com/default-anton/pi-finder#readme",
+  "pi": {
+    "extensions": [
+      "./extensions/index.ts"
+    ]
+  },
+  "scripts": {
+    "test:model-selection": "node --test extensions/model-selection.test.ts",
+    "pack:check": "npm pack --dry-run",
+    "prepublishOnly": "npm run test:model-selection"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*",
+    "@sinclair/typebox": "*"
+  },
+  "dependencies": {
+    "pi-subagent-model-selection": "^0.1.0"
+  },
+  "files": [
+    "extensions/",
+    "README.md",
+    "LICENSE"
+  ]
+}
