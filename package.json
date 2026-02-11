@@ -1,5 +1,5 @@
 {
-  "name": "pi-finder",
+  "name": "pi-finder-subagent",
   "version": "1.0.0",
   "description": "Read-only codebase scout subagent package for pi coding agent",
   "type": "module",

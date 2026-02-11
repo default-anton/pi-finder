@@ -7,7 +7,7 @@ Read-only codebase scout subagent package for [pi](https://github.com/badlogic/p
 From npm (after publish):
 
 ```bash
-pi install npm:pi-finder
+pi install npm:pi-finder-subagent
 ```
 
 From git:
@@ -19,7 +19,7 @@ pi install git:github.com/default-anton/pi-finder
 Or run without installing:
 
 ```bash
-pi -e npm:pi-finder
+pi -e npm:pi-finder-subagent
 # or
 pi -e git:github.com/default-anton/pi-finder
 ```
