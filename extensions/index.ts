@@ -60,7 +60,7 @@ export default function finderExtension(pi: ExtensionAPI) {
     name: "finder",
     label: "Finder",
     description:
-      "Read-only workspace scout: searches local files/folders with rg/fd/ls/read and returns structured Markdown with Summary, Locations (path:lineStart-lineEnd), Evidence, and Searched sections.",
+      "Read-only workspace scout for coding and personal-assistant tasks. Use when exact file/folder locations are unknown, you'd otherwise do exploratory ls/rg/fd/find/grep/read, or you need targeted evidence from large directories. Finder handles the reconnaissance and returns concise, relevant output: Summary, Locations (path:lineStart-lineEnd), Evidence, and Searched.",
     parameters: FinderParams,
 
     async execute(_toolCallId, params, signal, onUpdate, ctx: ExtensionContext) {
