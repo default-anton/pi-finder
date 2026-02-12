@@ -10,16 +10,15 @@
 Run after changing code (not docs-only):
 
 ```bash
-npm run test:model-selection
+npm run pack:check
 ```
 
 ## Policy changes
 
 When changing model-selection behavior:
 
-1. Update upstream package tests/docs in `pi-subagent-model-selection` first.
-2. Update README section `Model selection policy`.
-3. Keep fallback behavior explicit and deterministic.
+1. Update README section `Model selection policy`.
+2. Keep fallback behavior explicit and deterministic.
 
 ## Release process
 
