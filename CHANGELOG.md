@@ -23,6 +23,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.1.4] - 2026-02-12
+
+### Added
+
+- None.
+
+### Changed
+
+- Bumped `pi-subagent-model-selection` dependency range from `^0.1.2` to `^0.1.3`.
+
+### Fixed
+
+- None.
+
 ## [1.1.3] - 2026-02-12
 
 ### Added
