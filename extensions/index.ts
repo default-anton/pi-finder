@@ -60,7 +60,7 @@ export default function finderExtension(pi: ExtensionAPI) {
     name: "finder",
     label: "Finder",
     description:
-      "Read-only codebase scout: searches repositories using rg/fd/ls and read, returns structured Markdown with Summary, Locations (path:lineStart-lineEnd), Evidence, and Searched sections.",
+      "Read-only workspace scout: searches local files/folders with rg/fd/ls/read and returns structured Markdown with Summary, Locations (path:lineStart-lineEnd), Evidence, and Searched sections.",
     parameters: FinderParams,
 
     async execute(_toolCallId, params, signal, onUpdate, ctx: ExtensionContext) {
@@ -69,7 +69,8 @@ export default function finderExtension(pi: ExtensionAPI) {
       let onAbort: (() => void) | undefined;
       try {
         const maxTurns = DEFAULT_MAX_TURNS;
-        const query = typeof (params as any).query === "string" ? ((params as any).query as string).trim() : "";
+        const rawQuery = (params as any).query;
+        const query = typeof rawQuery === "string" ? rawQuery.trim() : "";
 
         if (!query) {
           const error = "Invalid parameters: expected `query` to be a non-empty string.";
@@ -370,7 +371,7 @@ export default function finderExtension(pi: ExtensionAPI) {
         let text = `${header}\n${workspaceLine}`;
         if (expanded && selectionReasonLine) text += `\n${selectionReasonLine}`;
         if (toolsText) text += `\n\n${toolsText}`;
-        text += `\n\n${theme.fg("muted", "Searching codebase…")}`;
+        text += `\n\n${theme.fg("muted", "Searching workspace…")}`;
         return new Text(text, 0, 0);
       }
 
@@ -381,7 +382,8 @@ export default function finderExtension(pi: ExtensionAPI) {
 
       if (!expanded) {
         const previewLines = combined.split("\n").slice(0, 18).join("\n");
-        let text = `${header}\n${workspaceLine}\n\n${theme.fg("toolOutput", previewLines)}`;
+        let text = `${header}\n${workspaceLine}`;
+        text += `\n\n${theme.fg("toolOutput", previewLines)}`;
         if (combined.split("\n").length > 18) text += `\n${theme.fg("muted", "(Ctrl+O to expand)")}`;
         if (toolsText) text += `\n\n${toolsText}`;
         return new Text(text, 0, 0);

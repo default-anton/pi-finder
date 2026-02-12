@@ -50,9 +50,12 @@ export interface FinderDetails {
 export const FinderParams = Type.Object({
   query: Type.String({
     description: [
-      "Describe what to find in the codebase. Include: (1) specific goal, (2) keywords/identifiers to search, (3) desired output type (paths, line ranges, directory structure), (4) what counts as 'found'.",
+      "Describe what to find in the workspace (code + personal files).",
+      "Include: (1) specific goal, (2) optional scope hints if known (paths/directories), (3) search hints (keywords/identifiers/filenames/extensions/metadata clues), (4) desired output type (paths, line ranges, directory structure, metadata), (5) what counts as 'found'.",
       "Finder uses rg/fd/ls and read — do not request grep or find.",
-      "Example: 'Find where user authentication is implemented. Look for functions named login, auth, or authenticate. Return paths with line ranges for the main entry point and token handling. Search in src/auth and src/api directories.'",
+      "Examples:",
+      "- Code: 'Find where user authentication is implemented. Search under src/auth and src/api for login/auth/authenticate, and return entrypoint + token handling with line ranges.'",
+      "- Personal: 'In ~/Documents and ~/Desktop, find my latest trip itinerary PDF and list the top candidate paths with evidence.'",
     ].join("\n"),
   }),
 });

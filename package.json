@@ -1,14 +1,16 @@
 {
   "name": "pi-finder-subagent",
   "version": "1.0.2",
-  "description": "Read-only codebase scout subagent package for pi coding agent",
+  "description": "Read-only local workspace scout subagent package for pi agents (code + personal files)",
   "type": "module",
   "keywords": [
     "pi-package",
     "pi-extension",
     "finder",
     "subagent",
-    "code-search"
+    "workspace-search",
+    "code-search",
+    "personal-assistant"
   ],
   "license": "Apache-2.0",
   "author": "Anton Kuzmenko",
