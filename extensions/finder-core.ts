@@ -2,7 +2,7 @@ import events from "node:events";
 
 import { Type } from "@sinclair/typebox";
 
-export const DEFAULT_MAX_TURNS = 10;
+export const DEFAULT_MAX_TURNS = 6;
 export const MAX_TOOL_CALLS_TO_KEEP = 80;
 
 const DEFAULT_EVENTTARGET_MAX_LISTENERS = 100;

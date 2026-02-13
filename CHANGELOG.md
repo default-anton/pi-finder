@@ -23,6 +23,21 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.2.0] - 2026-02-12
+
+### Added
+
+- None.
+
+### Changed
+
+- Reduced Finder's default turn budget from 10 to 6 (`DEFAULT_MAX_TURNS`) to tighten completion time and avoid over-searching.
+- Refined Finder system/user prompts to favor direct findings, faster path-first searches, and clearer evidence/citation guidance (including `rg -n` / `nl -ba` line-number sourcing).
+
+### Fixed
+
+- None.
+
 ## [1.1.4] - 2026-02-12
 
 ### Added
