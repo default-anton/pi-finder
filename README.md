@@ -35,7 +35,7 @@ pi -e git:github.com/default-anton/pi-finder
 - Works across code and non-code files in local workspaces.
 - Returns structured Markdown output (`Summary`, `Locations`, optional `Evidence`/`Searched`/`Next steps`).
 - Selects subagent model dynamically using shared package `pi-subagent-model-selection`.
-- Emits compact selection diagnostics (`authMode`, `authSource`, `reason`) in tool details.
+- Emits compact selection diagnostics (`reason`) in tool details.
 
 ## Tool interface
 
@@ -63,8 +63,25 @@ Find my latest trip itinerary PDF in Documents or Desktop and list top candidate
 
 ## Model selection policy
 
-Finder delegates model selection to `pi-subagent-model-selection` (shared with pi-librarian).
+Default behavior delegates model selection to `pi-subagent-model-selection` (shared with pi-librarian).
 The policy definition and its test suite live only in that package.
+
+You can override the subagent model explicitly with `PI_FINDER_MODEL`:
+
+```bash
+PI_FINDER_MODEL="provider/model:thinking"
+```
+
+Concrete example:
+
+```bash
+export PI_FINDER_MODEL=google-antigravity/gemini-3-flash:low
+```
+
+- `thinking` must be one of: `off`, `minimal`, `low`, `medium`, `high`, `xhigh`.
+- When `PI_FINDER_MODEL` is set to a non-empty value, Finder uses it instead of shared selection policy.
+- The requested model must exist in `modelRegistry.getAvailable()` (i.e. credentials are configured for that provider/model).
+- In override mode, selection diagnostics report an explicit `reason` including the chosen `provider/model:thinking`.
 
 ## Development
 

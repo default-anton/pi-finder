@@ -23,6 +23,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.3.0] - 2026-02-18
+
+### Added
+
+- Added `PI_FINDER_MODEL` override (`provider/model:thinking`) for deterministic subagent model selection; when set and non-empty, Finder bypasses `pi-subagent-model-selection`, uses the requested available model, and reports override diagnostics via explicit selection `reason`.
+
+### Changed
+
+- Simplified Finder selection diagnostics payload to `reason` only and removed `authMode` / `authSource` from Finder tool details and TUI rendering.
+
+### Fixed
+
+- None.
+
 ## [1.2.2] - 2026-02-17
 
 ### Added
