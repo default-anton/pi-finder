@@ -17,6 +17,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 ### Changed
 
+- None.
+
+### Fixed
+
+- None.
+
+## [1.4.0] - 2026-02-20
+
+### Added
+
+- None.
+
+### Changed
+
 - **BREAKING:** Replaced shared `pi-subagent-model-selection` routing and single-model `PI_FINDER_MODEL` override with local deterministic ordered failover via `PI_FINDER_MODELS`, including availability-filtered `ctx.model` fallback, and temporary-unavailable cache with reason-aware TTLs (quota: 30m, other final failures: 10m). Migration guidance: see `README.md` → **Model selection policy** (switch `PI_FINDER_MODEL` to ordered `PI_FINDER_MODELS="provider/model:thinking,..."`).
 
 ### Fixed
