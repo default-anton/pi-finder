@@ -34,7 +34,7 @@ pi -e git:github.com/default-anton/pi-finder
 - Enforces read-only scouting behavior (`rg`/`fd`/`ls` + targeted reads).
 - Works across code and non-code files in local workspaces.
 - Returns structured Markdown output (`Summary`, `Locations`, optional `Evidence`/`Searched`/`Next steps`).
-- Selects subagent model dynamically using shared package `pi-subagent-model-selection`.
+- Selects subagent model via ordered `PI_FINDER_MODELS` failover with `ctx.model` fallback.
 - Emits compact selection diagnostics (`reason`) in tool details.
 
 ## Tool interface
@@ -63,25 +63,35 @@ Find my latest trip itinerary PDF in Documents or Desktop and list top candidate
 
 ## Model selection policy
 
-Default behavior delegates model selection to `pi-subagent-model-selection` (shared with pi-librarian).
-The policy definition and its test suite live only in that package.
+Finder uses local deterministic model routing with ordered failover.
 
-You can override the subagent model explicitly with `PI_FINDER_MODEL`:
+Configure candidates with `PI_FINDER_MODELS`:
 
 ```bash
-PI_FINDER_MODEL="provider/model:thinking"
+PI_FINDER_MODELS="provider/model:thinking,provider/model:thinking,..."
 ```
 
 Concrete example:
 
 ```bash
-export PI_FINDER_MODEL=google-antigravity/gemini-3-flash:low
+export PI_FINDER_MODELS="openai-codex/gpt-5.3-codex-spark:high,google-antigravity/gemini-3-flash:medium,anthropic/claude-sonnet-4-6:high"
 ```
 
+Rules:
+
 - `thinking` must be one of: `off`, `minimal`, `low`, `medium`, `high`, `xhigh`.
-- When `PI_FINDER_MODEL` is set to a non-empty value, Finder uses it instead of shared selection policy.
-- The requested model must exist in `modelRegistry.getAvailable()` (i.e. credentials are configured for that provider/model).
-- In override mode, selection diagnostics report an explicit `reason` including the chosen `provider/model:thinking`.
+- Tokens are parsed in order (comma-separated, trimmed, empty tokens ignored).
+- Each token is filtered by:
+  1. `ctx.modelRegistry.getAvailable()`
+  2. Finder's in-memory temporary-unavailable cache (reason-aware TTL)
+- Finder picks the first candidate passing both filters.
+- If `PI_FINDER_MODELS` is unset/blank, or no candidate passes filters, Finder tries `ctx.model` fallback using the same availability + temporary-unavailable filters.
+- On any final non-abort model failure, Finder fails over to the next available candidate.
+- Temporary-unavailable TTLs are:
+  - quota-like final failures: 30 minutes
+  - other final failures: 10 minutes
+- Finder does not add its own retry/backoff loop for transient errors; SDK retry behavior remains the first-line retry mechanism.
+- Selection diagnostics stay compact and expose only `subagentSelection.reason`.
 
 ## Development
 

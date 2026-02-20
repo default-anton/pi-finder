@@ -2,7 +2,7 @@
 
 - Keep this package dependency-light. Do not add runtime dependencies unless strictly necessary.
 - `extensions/index.ts` is the only extension entrypoint; keep orchestration there.
-- Model routing policy comes from `pi-subagent-model-selection`; do not fork behavior locally.
+- Model routing policy lives locally in `extensions/model-selection.ts`; keep behavior deterministic and dependency-light.
 - Selection diagnostics contract lives in `extensions/finder-core.ts` (`subagentSelection`). Keep it tight: `reason`.
 
 ## Required validation
