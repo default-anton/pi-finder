@@ -2,7 +2,6 @@ import events from "node:events";
 
 import { Type } from "@sinclair/typebox";
 
-export const DEFAULT_MAX_TURNS = 6;
 export const MAX_TOOL_CALLS_TO_KEEP = 80;
 
 const DEFAULT_EVENTTARGET_MAX_LISTENERS = 100;
@@ -48,12 +47,12 @@ export interface FinderDetails {
 export const FinderParams = Type.Object({
   query: Type.String({
     description: [
-      "Describe what to find in the workspace (code + personal files).",
-      "Include: (1) specific goal, (2) optional scope hints if known (paths/directories), (3) search hints (keywords/identifiers/filenames/extensions/metadata clues), (4) desired output type (paths, line ranges, directory structure, metadata), (5) what counts as 'found'.",
+      "Describe the end goal for reconnaissance in the workspace (code + personal files), not just one missing location.",
+      "Include: (1) the task or decision this should unblock, (2) optional scope hints if known (paths/directories), (3) search hints (keywords/identifiers/filenames/extensions/metadata clues), (4) the deliverable you want back (entrypoints, core files, line ranges, related config/tests/docs/examples, candidate paths, metadata), (5) what counts as enough found.",
       "Finder uses rg/fd/ls and read — do not request grep or find.",
       "Examples:",
-      "- Code: 'Find where user authentication is implemented. Search under src/auth and src/api for login/auth/authenticate, and return entrypoint + token handling with line ranges.'",
-      "- Personal: 'In ~/Documents and ~/Desktop, find my latest trip itinerary PDF and list the top candidate paths with evidence.'",
+      "- Code: 'Before I change authentication, map where it is implemented. Search under src/auth and src/api for login/auth/authenticate, and return the entrypoint, token/session handling, related config/tests, and line-cited anchors.'",
+      "- Personal: 'In ~/Documents and ~/Desktop, find my latest trip itinerary PDF and any adjacent booking files, and list the top candidate paths with evidence.'",
     ].join("\n"),
   }),
 });

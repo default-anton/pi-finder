@@ -2,7 +2,7 @@
 
 Read-only local workspace scout subagent package for [pi](https://github.com/badlogic/pi-mono).
 
-Finder uses a single interface for both coding agents and personal AI assistants: search files/folders, gather evidence, and return cited locations.
+Finder uses a single interface for both coding agents and personal AI assistants: perform one-shot reconnaissance, gather evidence, and return a compact cited map of the relevant locations.
 
 ## Installation
 
@@ -29,11 +29,12 @@ pi -e git:github.com/default-anton/pi-finder
 ## What it does
 
 - Registers a `finder` tool.
-- Runs a dedicated subagent session with strict turn budget enforcement.
+- Runs a dedicated subagent session for one-shot reconnaissance.
 - Uses only `bash` + `read` in the subagent.
 - Enforces read-only scouting behavior (`rg`/`fd`/`ls` + targeted reads).
 - Works across code and non-code files in local workspaces.
 - Returns structured Markdown output (`Summary`, `Locations`, optional `Evidence`/`Searched`/`Next steps`).
+- Returns a compact map, not raw search noise: likely entrypoints, core files, nearby config/tests/docs/examples, and key citations.
 - Selects subagent model via ordered `PI_FINDER_MODELS` failover with `ctx.model` fallback.
 - Emits compact selection diagnostics (`reason`) in tool details.
 
@@ -45,20 +46,20 @@ finder({
 })
 ```
 
-- `query` (required): what to find, how to search, what counts as found, and (if known) scope hints such as directories/roots to prioritize.
+- `query` (required): the end goal for reconnaissance, how to search, what deliverable you want back, what counts as enough found, and (if known) scope hints such as directories/roots to prioritize.
 
 ## Example queries
 
 Code-oriented:
 
 ```txt
-Find where user authentication is implemented. Look for login/auth/authenticate and return entrypoint + token handling with line ranges under src/auth and src/api.
+Before I change authentication, map where it is implemented. Search under src/auth and src/api for login/auth/authenticate, and return the entrypoint, token/session handling, related config/tests, and line-cited anchors.
 ```
 
 Personal assistant-oriented:
 
 ```txt
-Find my latest trip itinerary PDF in Documents or Desktop and list top candidate paths with evidence.
+In Documents or Desktop, find my latest trip itinerary PDF and any adjacent booking files, and list the top candidate paths with evidence.
 ```
 
 ## Model selection policy

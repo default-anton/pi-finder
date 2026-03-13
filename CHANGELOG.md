@@ -23,6 +23,21 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.5.0] - 2026-03-13
+
+### Added
+
+- None.
+
+### Changed
+
+- Repositioned Finder as a one-shot reconnaissance subagent by updating the tool/parameter descriptions, README guidance, and system/user prompts to ask for the end goal and return a compact map of relevant files, nearby context, and evidence.
+- Removed Finder's fixed turn cap so the subagent can continue reconnaissance until it has enough evidence-backed context to answer.
+
+### Fixed
+
+- None.
+
 ## [1.4.0] - 2026-02-20
 
 ### Added

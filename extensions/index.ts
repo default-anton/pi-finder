@@ -1,4 +1,4 @@
-import type { ExtensionAPI, ExtensionContext, ExtensionFactory } from "@mariozechner/pi-coding-agent";
+import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
 import {
   DefaultResourceLoader,
   SessionManager,
@@ -10,7 +10,6 @@ import {
 import { Container, Markdown, Spacer, Text } from "@mariozechner/pi-tui";
 
 import {
-  DEFAULT_MAX_TURNS,
   FinderParams,
   MAX_TOOL_CALLS_TO_KEEP,
   bumpDefaultEventTargetMaxListeners,
@@ -39,42 +38,12 @@ import {
   type FinderSubagentModelSelection,
 } from "./model-selection";
 
-function createTurnBudgetExtension(maxTurns: number): ExtensionFactory {
-  return (pi) => {
-    let turnIndex = 0;
-
-    pi.on("turn_start", async (event) => {
-      turnIndex = event.turnIndex;
-    });
-
-    pi.on("tool_call", async () => {
-      if (turnIndex < maxTurns - 1) return undefined;
-
-      const humanTurn = Math.min(turnIndex + 1, maxTurns);
-      return {
-        block: true,
-        reason: `Tool use is disabled on the final turn (turn ${humanTurn}/${maxTurns}). Provide your final answer now without calling tools.`,
-      };
-    });
-
-    pi.on("tool_result", async (event) => {
-      const remainingAfter = Math.max(0, maxTurns - (turnIndex + 1));
-      const humanTurn = Math.min(turnIndex + 1, maxTurns);
-      const budgetLine = `[turn budget] turn ${humanTurn}/${maxTurns}; remaining after this turn: ${remainingAfter}`;
-
-      return {
-        content: [...(event.content ?? []), { type: "text", text: `\n\n${budgetLine}` }],
-      };
-    });
-  };
-}
-
 export default function finderExtension(pi: ExtensionAPI) {
   pi.registerTool({
     name: "finder",
     label: "Finder",
     description:
-      "Read-only workspace scout for coding and personal-assistant tasks. Use when exact file/folder locations are unknown, you'd otherwise do exploratory ls/rg/fd/find/grep/read, or you need targeted evidence from large directories. Finder handles the reconnaissance and returns concise, relevant output: Summary, Locations (path:lineStart-lineEnd), Evidence, and Searched.",
+      "Read-only workspace scout for coding and personal-assistant tasks. Prefer one broad Finder call per task: give it the end goal, likely scope, and hints, and let it do the reconnaissance you would otherwise do manually with ls/rg/fd/read. Finder returns a compact, evidence-backed map: likely entrypoints, core files, nearby config/tests/docs/examples, and key citations.",
     parameters: FinderParams,
 
     async execute(_toolCallId, params, signal, onUpdate, ctx: ExtensionContext) {
@@ -82,7 +51,6 @@ export default function finderExtension(pi: ExtensionAPI) {
       let abortListenerAdded = false;
       let onAbort: (() => void) | undefined;
       try {
-        const maxTurns = DEFAULT_MAX_TURNS;
         const rawQuery = (params as any).query;
         const query = typeof rawQuery === "string" ? rawQuery.trim() : "";
 
@@ -165,7 +133,7 @@ export default function finderExtension(pi: ExtensionAPI) {
 
         emitAll(true);
 
-        const systemPrompt = buildFinderSystemPrompt(maxTurns);
+        const systemPrompt = buildFinderSystemPrompt();
 
         let toolAborted = false;
         const activeSessions = new Set<{ abort: () => Promise<void> }>();
@@ -222,7 +190,6 @@ export default function finderExtension(pi: ExtensionAPI) {
           noSkills: true,
           noPromptTemplates: true,
           noThemes: true,
-          extensionFactories: [createTurnBudgetExtension(maxTurns)],
           systemPromptOverride: () => systemPrompt,
           skillsOverride: () => ({ skills: [], diagnostics: [] }),
         });
