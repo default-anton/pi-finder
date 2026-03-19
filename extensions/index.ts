@@ -374,8 +374,7 @@ export default function finderExtension(pi: ExtensionAPI) {
       const query = typeof (args as any)?.query === "string" ? ((args as any).query as string).trim() : "";
       const preview = shorten(query.replace(/\s+/g, " ").trim(), 70);
 
-      const title = theme.fg("toolTitle", theme.bold("finder"));
-      const text = title + (preview ? `\n${theme.fg("muted", preview)}` : "");
+      const text = preview ? theme.fg("muted", preview) : "";
       return new Text(text, 0, 0);
     },
 

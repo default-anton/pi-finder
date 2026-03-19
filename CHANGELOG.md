@@ -21,7 +21,7 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 ### Fixed
 
-- None.
+- Removed the duplicate `finder` title from the tool call renderer so the tool name is rendered once across call/result output.
 
 ## [1.5.0] - 2026-03-13
 
