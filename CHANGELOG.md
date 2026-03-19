@@ -17,7 +17,7 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 ### Changed
 
-- None.
+- Updated the GitHub release workflow to `actions/checkout@v6` and `actions/setup-node@v6` so JavaScript actions run on Node 24 instead of the deprecated Node 20 runtime.
 
 ### Fixed
 
