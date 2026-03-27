@@ -1,6 +1,6 @@
 {
   "name": "pi-finder-subagent",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "Read-only local workspace scout subagent package for pi agents (code + personal files)",
   "type": "module",
   "keywords": [
@@ -38,8 +38,8 @@
     "access": "public"
   },
   "peerDependencies": {
-    "@mariozechner/pi-coding-agent": "^0.53.0",
-    "@mariozechner/pi-tui": "^0.53.0",
+    "@mariozechner/pi-coding-agent": "^0.63.1",
+    "@mariozechner/pi-tui": "^0.63.1",
     "@sinclair/typebox": "*"
   },
   "files": [
