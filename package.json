@@ -1,6 +1,6 @@
 {
   "name": "pi-finder-subagent",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Read-only local workspace scout subagent package for pi agents (code + personal files)",
   "type": "module",
   "keywords": [

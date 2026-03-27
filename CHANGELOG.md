@@ -23,6 +23,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.5.4] - 2026-03-27
+
+### Added
+
+- None.
+
+### Changed
+
+- Refreshed the repository lockfile used for local validation and release automation; published package contents are otherwise unchanged.
+
+### Fixed
+
+- None.
+
 ## [1.5.3] - 2026-03-27
 
 ### Added
