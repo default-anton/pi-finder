@@ -23,6 +23,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.5.5] - 2026-04-21
+
+### Added
+
+- None.
+
+### Changed
+
+- None.
+
+### Fixed
+
+- Updated Finder's nested `createAgentSession()` call for pi 0.68 by switching built-in tool selection to the new tool-name allowlist API and passing explicit `cwd`/`agentDir` into `DefaultResourceLoader`; bumped peer dependency ranges to `^0.68.0` to match the supported pi release.
+
 ## [1.5.4] - 2026-03-27
 
 ### Added

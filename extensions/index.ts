@@ -3,8 +3,7 @@ import {
   DefaultResourceLoader,
   SessionManager,
   createAgentSession,
-  createBashTool,
-  createReadTool,
+  getAgentDir,
   getMarkdownTheme,
 } from "@mariozechner/pi-coding-agent";
 import { Container, Markdown, Spacer, Text } from "@mariozechner/pi-tui";
@@ -185,6 +184,8 @@ export default function finderExtension(pi: ExtensionAPI) {
         const attemptFailures: FinderAttemptFailure[] = [];
 
         const resourceLoader = new DefaultResourceLoader({
+          cwd: ctx.cwd,
+          agentDir: getAgentDir(),
           noExtensions: true,
           additionalExtensionPaths: ["npm:pi-subdir-context"],
           noSkills: true,
@@ -220,7 +221,7 @@ export default function finderExtension(pi: ExtensionAPI) {
               sessionManager: SessionManager.inMemory(ctx.cwd),
               model: selection.model,
               thinkingLevel: selection.thinkingLevel,
-              tools: [createReadTool(ctx.cwd), createBashTool(ctx.cwd)],
+              tools: ["read", "bash"],
             });
 
             session = createdSession;
