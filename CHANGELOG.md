@@ -23,7 +23,7 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
-## [1.5.5] - 2026-04-21
+## [1.5.6] - 2026-04-21
 
 ### Added
 
@@ -31,7 +31,7 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 ### Changed
 
-- None.
+- Refreshed the repository lockfile for the pi 0.68 peer dependency bump and made `npm run release:gate` run `npm ci` before packing so local release validation catches lockfile drift.
 
 ### Fixed
 
