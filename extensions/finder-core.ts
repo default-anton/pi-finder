@@ -1,6 +1,6 @@
 import events from "node:events";
 
-import { Type } from "@sinclair/typebox";
+import { Type } from "typebox";
 
 export const MAX_TOOL_CALLS_TO_KEEP = 80;
 

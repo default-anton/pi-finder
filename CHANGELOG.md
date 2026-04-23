@@ -23,6 +23,20 @@ All notable changes to `pi-finder-subagent` are documented here.
 
 - None.
 
+## [1.5.7] - 2026-04-22
+
+### Added
+
+- None.
+
+### Changed
+
+- Bumped the supported pi peer dependency range to `^0.69.0` and migrated the extension TypeBox peer/import to `typebox` 1.x for pi 0.69 compatibility.
+
+### Fixed
+
+- None.
+
 ## [1.5.6] - 2026-04-21
 
 ### Added
